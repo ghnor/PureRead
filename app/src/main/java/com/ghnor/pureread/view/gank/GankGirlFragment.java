@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.api.GankApis;
-import com.ghnor.pureread.base.BaseFragment;
+import com.ghnor.pureread.base.BaseLazyFragment;
 import com.ghnor.pureread.entity.BaseEntity;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.util.ServiceRequester;
@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
  * Created by ghnor on 2016/10/23.
  */
 
-public class GankGirlFragment extends BaseFragment {
+public class GankGirlFragment extends BaseLazyFragment {
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 

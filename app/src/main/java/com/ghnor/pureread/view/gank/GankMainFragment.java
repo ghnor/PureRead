@@ -77,6 +77,7 @@ public class GankMainFragment extends BaseFragment {
         mGankMainPagerAdapter.addItem(mGankTechRelaxFragment, "休息视频");
         mGankMainPagerAdapter.addItem(mGankGirlFragment, "福利");
         mViewPager.setAdapter(mGankMainPagerAdapter);
+        mViewPager.setOffscreenPageLimit(7);
         mTabLayout.setupWithViewPager(mViewPager);
     }
 }

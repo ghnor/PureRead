@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.api.GankApis;
-import com.ghnor.pureread.base.BaseFragment;
+import com.ghnor.pureread.base.BaseLazyFragment;
 import com.ghnor.pureread.entity.BaseEntity;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.util.ServiceRequester;
@@ -29,7 +29,7 @@ import rx.schedulers.Schedulers;
  * Created by ghnor on 2016/10/22.
  */
 
-public class GankTechFragment extends BaseFragment {
+public class GankTechFragment extends BaseLazyFragment {
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
 
@@ -62,9 +62,22 @@ public class GankTechFragment extends BaseFragment {
 
         initData();
         initView();
-        requestService();
 
         return rootView;
+    }
+
+    @Override
+    protected void onFirstUserVisible() {
+        super.onFirstUserVisible();
+        Log.i(TAG, "onFirstUserVisible");
+        requestService();
+    }
+
+    @Override
+    protected void onUserVisible() {
+        super.onUserVisible();
+        Log.i(TAG, "onUserVisible");
+
     }
 
     private void initData() {
