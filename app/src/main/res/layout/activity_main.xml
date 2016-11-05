@@ -10,7 +10,7 @@
     tools:openDrawer="start"
     tools:context=".view.main.MainActivity">
 
-    <android.support.design.widget.CoordinatorLayout
+<!--    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
@@ -50,7 +50,7 @@
             android:layout_margin="@dimen/fab_margin"
             app:srcCompat="@android:drawable/ic_dialog_email" />
 
-    </android.support.design.widget.CoordinatorLayout>
+    </android.support.design.widget.CoordinatorLayout>-->
 
     <FrameLayout
         android:layout_width="match_parent"

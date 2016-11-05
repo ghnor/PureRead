@@ -7,6 +7,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -51,6 +53,7 @@ public class GankMainFragment extends BaseFragment {
         ButterKnife.bind(this, view);
 
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
+        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initFragment();
         initViewPager();
 
@@ -77,7 +80,12 @@ public class GankMainFragment extends BaseFragment {
         mGankMainPagerAdapter.addItem(mGankTechRelaxFragment, "休息视频");
         mGankMainPagerAdapter.addItem(mGankGirlFragment, "福利");
         mViewPager.setAdapter(mGankMainPagerAdapter);
-        mViewPager.setOffscreenPageLimit(7);
+        mViewPager.setOffscreenPageLimit(6);
         mTabLayout.setupWithViewPager(mViewPager);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
     }
 }

@@ -1,5 +1,6 @@
 package com.ghnor.pureread.entity;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ public class GankEntity {
     public String createdAt;
     public String desc;
     public List<String> images;
-    public String publishedAt;
+    public Date publishedAt;
     public String source;
     public String type;
     public String url;

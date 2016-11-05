@@ -7,6 +7,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.entity.GankEntity;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -14,6 +15,9 @@ import java.util.List;
  */
 
 public class GankTechAdapter extends BaseQuickAdapter<GankEntity> {
+
+    private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
     public GankTechAdapter(int layoutResId, List<GankEntity> data) {
         super(layoutResId, data);
     }
@@ -30,7 +34,7 @@ public class GankTechAdapter extends BaseQuickAdapter<GankEntity> {
     protected void convert(BaseViewHolder baseViewHolder, GankEntity gankEntity) {
         baseViewHolder.setText(R.id.tv_desc, gankEntity.desc);
         baseViewHolder.setText(R.id.tv_author, gankEntity.who);
-        baseViewHolder.setText(R.id.tv_time, gankEntity.publishedAt);
+        baseViewHolder.setText(R.id.tv_time, format.format(gankEntity.publishedAt));
         baseViewHolder.setText(R.id.tv_type, gankEntity.type);
     }
 }
