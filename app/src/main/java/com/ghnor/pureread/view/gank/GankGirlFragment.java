@@ -13,7 +13,7 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.api.GankApis;
-import com.ghnor.pureread.base.BaseLazyFragment;
+import com.ghnor.pureread.base.BaseFragment;
 import com.ghnor.pureread.entity.BaseEntity;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.util.ServiceRequester;
@@ -31,7 +31,7 @@ import rx.schedulers.Schedulers;
  * Created by ghnor on 2016/10/23.
  */
 
-public class GankGirlFragment extends BaseLazyFragment
+public class GankGirlFragment extends BaseFragment
         implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final String TAG = "GankGirlFragment";
@@ -66,8 +66,8 @@ public class GankGirlFragment extends BaseLazyFragment
     }
 
     @Override
-    protected void onFirstUserVisible() {
-        super.onFirstUserVisible();
+    public void onUserVisibleFirst() {
+        super.onUserVisibleFirst();
         requestService(mPageIndex);
     }
 

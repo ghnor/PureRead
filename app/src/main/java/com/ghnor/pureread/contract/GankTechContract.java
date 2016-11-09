@@ -1,0 +1,20 @@
+package com.ghnor.pureread.contract;
+
+import com.ghnor.pureread.base.BasePresenter;
+import com.ghnor.pureread.base.BaseView;
+
+/**
+ * Created by ghnor on 2016/11/6.
+ */
+
+public interface GankTechContract {
+    interface View extends BaseView {
+
+    }
+
+    interface Presenter extends BasePresenter<View> {
+
+        void getGirlData();
+
+    }
+}

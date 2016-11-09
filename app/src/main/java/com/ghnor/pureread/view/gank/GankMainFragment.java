@@ -52,8 +52,9 @@ public class GankMainFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_gank_main, container, false);
         ButterKnife.bind(this, view);
 
+//        mToolbar.setNavigationIcon();
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initFragment();
         initViewPager();
 
