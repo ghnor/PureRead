@@ -17,6 +17,11 @@ public class MainActivity extends BaseActivity
     private GankMainFragment mGankMainFragment;
 
     @Override
+    public void initInject() {
+
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

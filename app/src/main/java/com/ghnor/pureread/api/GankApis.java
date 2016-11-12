@@ -1,6 +1,6 @@
 package com.ghnor.pureread.api;
 
-import com.ghnor.pureread.entity.BaseEntity;
+import com.ghnor.pureread.entity.ServiceResponse;
 import com.ghnor.pureread.entity.GankEntity;
 
 import java.util.List;
@@ -25,19 +25,8 @@ public interface GankApis {
      * @return
      */
     @GET("data/{type}/{pageSize}/{pageIndex}")
-    Observable<BaseEntity<List<GankEntity>>> getGankTechList(
+    Observable<ServiceResponse<List<GankEntity>>> getGankTechList(
             @Path("type") String type,
-            @Path("pageSize") int pageSize,
-            @Path("pageIndex") int pageIndex);
-
-    /**
-     * 妹纸列表
-     * @param pageSize
-     * @param pageIndex
-     * @return
-     */
-    @GET("data/福利/{pageSize}/{pageIndex}")
-    Observable<BaseEntity<List<GankEntity>>> getGankGirlList(
             @Path("pageSize") int pageSize,
             @Path("pageIndex") int pageIndex);
 }

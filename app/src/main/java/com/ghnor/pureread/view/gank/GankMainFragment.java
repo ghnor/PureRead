@@ -45,6 +45,11 @@ public class GankMainFragment extends BaseFragment {
         return new GankMainFragment();
     }
 
+    @Override
+    protected void initInject() {
+
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,

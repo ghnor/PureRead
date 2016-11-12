@@ -14,7 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.api.GankApis;
 import com.ghnor.pureread.base.BaseFragment;
-import com.ghnor.pureread.entity.BaseEntity;
+import com.ghnor.pureread.entity.ServiceResponse;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.util.ServiceRequester;
 
@@ -44,12 +44,16 @@ public class GankGirlFragment extends BaseFragment
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<GankEntity> mGankList;
+    private List<GankEntity> mGankList = new ArrayList<>();
     private GankGirlAdapter mGankGirlAdapter;
 
     public static GankGirlFragment newInstance() {
         GankGirlFragment gankGirlFragment = new GankGirlFragment();
         return gankGirlFragment;
+    }
+
+    @Override
+    protected void initInject() {
     }
 
     @Nullable
@@ -59,7 +63,6 @@ public class GankGirlFragment extends BaseFragment
         View rootView = inflater.inflate(R.layout.fragment_gank, container, false);
         ButterKnife.bind(this, rootView);
 
-        initData();
         initView();
 
         return rootView;
@@ -69,10 +72,6 @@ public class GankGirlFragment extends BaseFragment
     public void onUserVisibleFirst() {
         super.onUserVisibleFirst();
         requestService(mPageIndex);
-    }
-
-    private void initData() {
-        mGankList = new ArrayList<>();
     }
 
     private void initView() {
@@ -93,7 +92,7 @@ public class GankGirlFragment extends BaseFragment
         gankApis.getGankTechList(FULI, 20, pageIndex)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseEntity<List<GankEntity>>>() {
+                .subscribe(new Subscriber<ServiceResponse<List<GankEntity>>>() {
                     @Override
                     public void onCompleted() {
                         Log.i(TAG, "请求服务器onCompleted");
@@ -106,7 +105,7 @@ public class GankGirlFragment extends BaseFragment
                     }
 
                     @Override
-                    public void onNext(BaseEntity<List<GankEntity>> listBaseEntity) {
+                    public void onNext(ServiceResponse<List<GankEntity>> listBaseEntity) {
                         mGankGirlAdapter.addData(listBaseEntity.results);
                     }
                 });

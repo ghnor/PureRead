@@ -5,35 +5,30 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.ghnor.pureread.R;
-import com.ghnor.pureread.api.GankApis;
 import com.ghnor.pureread.base.BaseFragment;
-import com.ghnor.pureread.entity.BaseEntity;
+import com.ghnor.pureread.contract.GankTechContract;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.presenter.GankTechPresenter;
-import com.ghnor.pureread.util.ServiceRequester;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Created by ghnor on 2016/10/22.
  */
 
 public class GankTechFragment extends BaseFragment<GankTechPresenter>
-        implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener {
+        implements SwipeRefreshLayout.OnRefreshListener, BaseQuickAdapter.RequestLoadMoreListener,
+        GankTechContract.View{
 
     public static final String TAG = "GankTechFragment";
     public static final String ALL = "all";
@@ -43,15 +38,12 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
     public static final String EXPEND = "拓展资源";
     public static final String RELAX = "休息视频";
 
-    private String mType; //当前界面需要显示的类型
-    private int mPageIndex = 1;
-
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    private List<GankEntity> mGankList;
+    private List<GankEntity> mGankList = new ArrayList<>();;
     private GankTechAdapter mGankTechAdapter;
 
     public static GankTechFragment newInstance(String type) {
@@ -75,14 +67,18 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
     }
 
     @Override
+    protected void initInject() {
+        getFragmentComponent().inject(this);
+    }
+
+    @Override
     public void onUserVisibleFirst() {
         super.onUserVisibleFirst();
-        requestService(mPageIndex);
+        getPresenter().getData();
     }
 
     private void initData() {
-        mGankList = new ArrayList<>();
-        mType = getArguments().getString("type");
+        getPresenter().setType(getArguments().getString("type"));
     }
 
     private void initView() {
@@ -95,39 +91,24 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
-    private void requestService(int pageIndex) {
-        GankApis gankApis = ServiceRequester.getGankAll();
-        gankApis.getGankTechList(mType, 20, pageIndex)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseEntity<List<GankEntity>>>() {
-                    @Override
-                    public void onCompleted() {
-                        Log.e(TAG, "请求服务器onCompleted");
-                        mSwipeRefreshLayout.setRefreshing(false);
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG, "请求服务器onError\n" + e.toString());
-                    }
-
-                    @Override
-                    public void onNext(BaseEntity<List<GankEntity>> listBaseEntity) {
-                        mGankTechAdapter.addData(listBaseEntity.results);
-                    }
-                });
-    }
-
     @Override
     public void onRefresh() {
-        mPageIndex = 1;
-        requestService(mPageIndex);
+        getPresenter().getData();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        mPageIndex++;
-        requestService(mPageIndex);
+        getPresenter().getDataMore();
+    }
+
+    @Override
+    public void showContent(List<GankEntity> list) {
+        mSwipeRefreshLayout.setRefreshing(false);
+        mGankTechAdapter.setNewData(list);
+    }
+
+    @Override
+    public void showContentMore(List<GankEntity> list) {
+        mGankTechAdapter.addData(list);
     }
 }

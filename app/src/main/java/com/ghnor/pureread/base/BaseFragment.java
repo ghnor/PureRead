@@ -12,15 +12,31 @@ import com.ghnor.pureread.di.component.DaggerFragmentComponent;
 import com.ghnor.pureread.di.component.FragmentComponent;
 import com.ghnor.pureread.di.module.FragmentModule;
 
+import javax.inject.Inject;
+
 /**
  * Created by ghnor on 2016/10/25.
  */
 
-public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment {
+public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment implements BaseView {
+
+    private FragmentComponent mFragmentComponent;
+
+    @Inject
+    protected T mPresenter;
+
+    protected abstract void initInject();
 
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        initFragmentComponent();
+        initInject();
     }
 
     @Nullable
@@ -32,11 +48,16 @@ public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (mPresenter == null) return;
+        mPresenter.attachView(this);
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
     }
 
     @Override
@@ -44,12 +65,19 @@ public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment
         super.onHiddenChanged(hidden);
     }
 
-    protected FragmentComponent getFragmentComponent(){
-        return DaggerFragmentComponent.builder()
+    private void initFragmentComponent() {
+        mFragmentComponent = DaggerFragmentComponent.builder()
                 .applicationComponent(((App) getActivity().getApplication()).getApplicationComponent())
                 .fragmentModule(new FragmentModule(this))
                 .build();
     }
 
-    protected abstract void initInject();
+    protected FragmentComponent getFragmentComponent(){
+        return mFragmentComponent;
+    }
+
+    protected T getPresenter() {
+        return mPresenter;
+    }
+
 }

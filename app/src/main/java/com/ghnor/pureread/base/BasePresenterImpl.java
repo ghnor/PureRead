@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
  */
 
 public class BasePresenterImpl<T extends BaseView> implements BasePresenter<T> {
+
+    private T mView;
+
     @Override
     public void onCreate() {
 
@@ -19,11 +22,15 @@ public class BasePresenterImpl<T extends BaseView> implements BasePresenter<T> {
 
     @Override
     public void attachView(@NonNull T view) {
-
+        mView = view;
     }
 
     @Override
     public void detachView() {
+        mView = null;
+    }
 
+    protected T getView() {
+        return mView;
     }
 }
