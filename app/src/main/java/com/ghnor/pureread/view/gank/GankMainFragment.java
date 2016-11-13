@@ -3,12 +3,11 @@ package com.ghnor.pureread.view.gank;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -57,9 +56,8 @@ public class GankMainFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_gank_main, container, false);
         ButterKnife.bind(this, view);
 
-//        mToolbar.setNavigationIcon();
+        mToolbar.setNavigationIcon(ContextCompat.getDrawable(getActivity(), R.drawable.ic_drawer));
         ((AppCompatActivity) getActivity()).setSupportActionBar(mToolbar);
-//        ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         initFragment();
         initViewPager();
 
@@ -88,10 +86,5 @@ public class GankMainFragment extends BaseFragment {
         mViewPager.setAdapter(mGankMainPagerAdapter);
         mViewPager.setOffscreenPageLimit(6);
         mTabLayout.setupWithViewPager(mViewPager);
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
     }
 }

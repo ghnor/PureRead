@@ -3,6 +3,13 @@
     package="com.ghnor.pureread">
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <!--<<<<<<腾讯X5内核-->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--腾讯X5内核>>>>>>-->
 
     <application
         android:allowBackup="true"
@@ -10,17 +17,22 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:name=".App"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme.NoActionBar">
         <activity
             android:name=".view.main.MainActivity"
-            android:label="@string/app_name"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".view.web.WebActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fit"/>
+
+        <meta-data
+            android:name="QBSDKAppKey"
+            android:value="xln+lrZXExaz9nziFiRLL7PO" />
     </application>
 
 </manifest>

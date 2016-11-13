@@ -3,6 +3,7 @@ package com.ghnor.pureread.base;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,6 +36,7 @@ public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Log.e("BaseFragment", "onCreate");
         initFragmentComponent();
         initInject();
     }
@@ -42,14 +44,17 @@ public abstract class BaseFragment<T extends BasePresenter> extends LazyFragment
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.e("BaseFragment", "onCreateView");
         return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (mPresenter == null) return;
-        mPresenter.attachView(this);
+        Log.e("BaseFragment", "onViewCreated");
+        if (mPresenter != null){
+            mPresenter.attachView(this);
+        }
     }
 
     @Override

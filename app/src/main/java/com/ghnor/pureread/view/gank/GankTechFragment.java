@@ -5,16 +5,19 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.base.BaseFragment;
 import com.ghnor.pureread.contract.GankTechContract;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.presenter.GankTechPresenter;
+import com.ghnor.pureread.view.web.WebActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -54,12 +57,18 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
         return gankTechFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.e(TAG, "onCreate");
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_gank, container, false);
         ButterKnife.bind(this, rootView);
-
+        Log.e(TAG, "onCreateView");
         initData();
         initView();
 
@@ -68,6 +77,7 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
 
     @Override
     protected void initInject() {
+        Log.e(TAG, "initInject");
         getFragmentComponent().inject(this);
     }
 
@@ -86,6 +96,15 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
         mRecyclerView.setAdapter(mGankTechAdapter =
                 new GankTechAdapter(R.layout.item_gank_tech, mGankList));
         mGankTechAdapter.setOnLoadMoreListener(this);
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                GankEntity entity = ((GankEntity) baseQuickAdapter.getItem(i));
+                String url = entity.url;
+                String title = entity.desc;
+                WebActivity.openActivity(getActivity(), url, title);
+            }
+        });
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setRefreshing(true);
