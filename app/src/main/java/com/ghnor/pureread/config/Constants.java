@@ -8,4 +8,6 @@ public class Constants {
 
     public static final String GANK_BASE_URL = "http://gank.io/api/";
 
+    public static final int PAGE_SIZE = 20;
+
 }

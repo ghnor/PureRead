@@ -14,6 +14,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.base.BaseFragment;
+import com.ghnor.pureread.config.Constants;
 import com.ghnor.pureread.contract.GankTechContract;
 import com.ghnor.pureread.entity.GankEntity;
 import com.ghnor.pureread.presenter.GankTechPresenter;
@@ -40,6 +41,8 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
     public static final String WEB = "前端";
     public static final String EXPEND = "拓展资源";
     public static final String RELAX = "休息视频";
+
+    private String tag = "";
 
     @BindView(R.id.recycler_view)
     RecyclerView mRecyclerView;
@@ -84,10 +87,13 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
     @Override
     public void onUserVisibleFirst() {
         super.onUserVisibleFirst();
+        Log.e(tag, "onUserVisibleFirst");
+        mSwipeRefreshLayout.setRefreshing(true);
         getPresenter().getData();
     }
 
     private void initData() {
+        tag = getArguments().getString("type");
         getPresenter().setType(getArguments().getString("type"));
     }
 
@@ -95,6 +101,7 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         mRecyclerView.setAdapter(mGankTechAdapter =
                 new GankTechAdapter(R.layout.item_gank_tech, mGankList));
+        mGankTechAdapter.openLoadMore(Constants.PAGE_SIZE);
         mGankTechAdapter.setOnLoadMoreListener(this);
         mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
             @Override
@@ -107,16 +114,17 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
         });
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
-        mSwipeRefreshLayout.setRefreshing(true);
     }
 
     @Override
     public void onRefresh() {
+        Log.e(tag, "onRefresh");
         getPresenter().getData();
     }
 
     @Override
     public void onLoadMoreRequested() {
+        Log.e(tag, "onLoadMoreRequested");
         getPresenter().getDataMore();
     }
 
