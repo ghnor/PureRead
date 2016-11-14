@@ -93,7 +93,6 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
     }
 
     private void initData() {
-        tag = getArguments().getString("type");
         getPresenter().setType(getArguments().getString("type"));
     }
 
@@ -118,13 +117,11 @@ public class GankTechFragment extends BaseFragment<GankTechPresenter>
 
     @Override
     public void onRefresh() {
-        Log.e(tag, "onRefresh");
         getPresenter().getData();
     }
 
     @Override
     public void onLoadMoreRequested() {
-        Log.e(tag, "onLoadMoreRequested");
         getPresenter().getDataMore();
     }
 

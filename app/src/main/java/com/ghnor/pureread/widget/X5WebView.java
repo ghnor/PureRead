@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.ProgressBar;
 
+import com.ghnor.pureread.util.DensityUtil;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebSettings.LayoutAlgorithm;
 import com.tencent.smtt.sdk.WebView;
@@ -42,7 +43,9 @@ public class X5WebView extends WebView {
 
     private void initProgressBar(Context context) {
         progressbar = new ProgressBar(context, null, android.R.attr.progressBarStyleHorizontal);
-        progressbar.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, 10));
+        progressbar.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT,
+
+                DensityUtil.dp2px(getContext(), 8)));
         addView(progressbar);
     }
 
