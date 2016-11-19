@@ -29,6 +29,8 @@
         </activity>
         <activity android:name=".view.web.WebActivity"
             android:theme="@style/AppTheme.NoActionBar.Fit"/>
+        <activity android:name=".view.about.AboutActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fit"/>
 
         <meta-data
             android:name="QBSDKAppKey"

@@ -29,7 +29,7 @@ public class GankMainFragment extends BaseFragment {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
-    public static String TAG = "GankMainFragment";
+    public static final String TAG = "GankMainFragment";
 
     private GankTechFragment mGankTechAllFragment;
     private GankTechFragment mGankTechAndroidFragment;

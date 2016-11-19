@@ -10,7 +10,10 @@ import android.widget.FrameLayout;
 
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.base.BaseActivity;
+import com.ghnor.pureread.view.about.AboutActivity;
 import com.ghnor.pureread.view.gank.GankMainFragment;
+import com.ghnor.pureread.view.weixin.WeixinMainFragment;
+import com.ghnor.pureread.view.zhihu.ZhihuMainFragment;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,6 +29,8 @@ public class MainActivity extends BaseActivity
     DrawerLayout mDrawerLayout;
 
     private GankMainFragment mGankMainFragment;
+    private WeixinMainFragment mWeixinMainFragment;
+    private ZhihuMainFragment mZhihuMainFragment;
 
     @Override
     public void initInject() {
@@ -53,11 +58,38 @@ public class MainActivity extends BaseActivity
         if (mGankMainFragment == null) {
             mGankMainFragment = GankMainFragment.newInstance();
         }
-        getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
-                mGankMainFragment, GankMainFragment.TAG).commit();
+
+        if (mWeixinMainFragment == null) {
+            mWeixinMainFragment = WeixinMainFragment.newInstance();
+        }
+
+        if (mZhihuMainFragment == null) {
+            mZhihuMainFragment = ZhihuMainFragment.newInstance();
+        }
+
+        replaceFragment(GankMainFragment.TAG);
     }
 
-    public void toggleDrawer() {
+    private void replaceFragment(String fragmentTag) {
+        switch (fragmentTag) {
+            case GankMainFragment.TAG:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                        mGankMainFragment, GankMainFragment.TAG).commit();
+                break;
+            case WeixinMainFragment.TAG:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                        mWeixinMainFragment, WeixinMainFragment.TAG).commit();
+                break;
+            case ZhihuMainFragment.TAG:
+                getSupportFragmentManager().beginTransaction().replace(R.id.frame_layout,
+                        mZhihuMainFragment, ZhihuMainFragment.TAG).commit();
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void toggleDrawer() {
 
         if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
             mDrawerLayout.closeDrawer(GravityCompat.START);
@@ -77,7 +109,6 @@ public class MainActivity extends BaseActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
@@ -89,7 +120,8 @@ public class MainActivity extends BaseActivity
             case android.R.id.home:
                 toggleDrawer();
                 return true;
-            case R.id.action_settings:
+            case R.id.action_about:
+                AboutActivity.openActivity(MainActivity.this);
                 return true;
             default:
                 break;
@@ -102,20 +134,21 @@ public class MainActivity extends BaseActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        switch (item.getItemId()) {
+            case R.id.nav_gank:
+                replaceFragment(GankMainFragment.TAG);
+                break;
+            case R.id.nav_weixin:
+                replaceFragment(WeixinMainFragment.TAG);
+                break;
+            case R.id.nav_zhihu:
+                replaceFragment(ZhihuMainFragment.TAG);
+                break;
+            case R.id.nav_about:
+                AboutActivity.openActivity(MainActivity.this);
+                break;
+            default:
+                break;
         }
 
         mDrawerLayout.closeDrawer(GravityCompat.START);
