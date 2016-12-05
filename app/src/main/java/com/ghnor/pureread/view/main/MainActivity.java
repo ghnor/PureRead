@@ -46,12 +46,6 @@ public class MainActivity extends BaseActivity
         mNavView.setNavigationItemSelectedListener(this);
 
         initFragment();
-
-//        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-//        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-//                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-//        drawer.addDrawerListener(toggle);
-//        toggle.syncState();
     }
 
     private void initFragment() {
@@ -130,10 +124,8 @@ public class MainActivity extends BaseActivity
         return super.onOptionsItemSelected(item);
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
         switch (item.getItemId()) {
             case R.id.nav_gank:
                 replaceFragment(GankMainFragment.TAG);
@@ -146,7 +138,7 @@ public class MainActivity extends BaseActivity
                 break;
             case R.id.nav_about:
                 AboutActivity.openActivity(MainActivity.this);
-                break;
+                return true;
             default:
                 break;
         }
