@@ -20,4 +20,23 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="AboutSpacing">
+        <item name="android:paddingLeft">@dimen/dp_16</item>
+        <item name="android:paddingRight">@dimen/dp_16</item>
+        <item name="android:paddingTop">@dimen/dp_8</item>
+        <item name="android:paddingBottom">@dimen/dp_8</item>
+    </style>
+
+    <style name="AboutSpacing.white" parent="AboutSpacing">
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="AboutSpacing.gray" parent="AboutSpacing">
+        <item name="android:background">@color/gray_light</item>
+    </style>
+
+    <style name="AboutSpacing.transparent" parent="AboutSpacing">
+        <item name="android:background">@color/transparent</item>
+    </style>
+
 </resources>

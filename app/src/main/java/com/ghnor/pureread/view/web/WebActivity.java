@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.base.BaseActivity;
+import com.ghnor.pureread.util.ClipboardUtil;
+import com.ghnor.pureread.util.IntentUtil;
+import com.ghnor.pureread.util.ShareUtil;
 import com.ghnor.pureread.widget.X5WebView;
 
 import butterknife.BindView;
@@ -53,5 +57,23 @@ public class WebActivity extends BaseActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.web, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_copy:
+                ClipboardUtil.copy(WebActivity.this, mWebView.getUrl());
+                return true;
+            case R.id.menu_share:
+                ShareUtil.share(WebActivity.this, mWebView.getUrl());
+                return true;
+            case R.id.menu_open_browser:
+                IntentUtil.openBrowser(WebActivity.this, mWebView.getUrl());
+                return true;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
