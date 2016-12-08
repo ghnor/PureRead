@@ -11,12 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.listener.OnItemClickListener;
 import com.ghnor.pureread.R;
 import com.ghnor.pureread.api.GankApis;
 import com.ghnor.pureread.base.BaseFragment;
-import com.ghnor.pureread.entity.ServiceResponse;
 import com.ghnor.pureread.entity.GankEntity;
+import com.ghnor.pureread.entity.ServiceResponse;
 import com.ghnor.pureread.util.ServiceRequester;
+import com.ghnor.pureread.view.image.ImageActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,14 @@ public class GankGirlFragment extends BaseFragment
         mRecyclerView.setAdapter(mGankGirlAdapter =
                 new GankGirlAdapter(R.layout.item_gank_girl, mGankList));
         mGankGirlAdapter.setOnLoadMoreListener(this);
+        mRecyclerView.addOnItemTouchListener(new OnItemClickListener() {
+            @Override
+            public void SimpleOnItemClick(BaseQuickAdapter baseQuickAdapter, View view, int i) {
+                GankEntity entity = ((GankEntity) baseQuickAdapter.getItem(i));
+                String url = entity.url;
+                ImageActivity.openActivity(getActivity(), url);
+            }
+        });
 
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mSwipeRefreshLayout.setRefreshing(true);

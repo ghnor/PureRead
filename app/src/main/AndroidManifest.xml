@@ -31,6 +31,8 @@
             android:theme="@style/AppTheme.NoActionBar.Fit"/>
         <activity android:name=".view.about.AboutActivity"
             android:theme="@style/AppTheme.NoActionBar.Fit"/>
+        <activity android:name=".view.image.ImageActivity"
+            android:theme="@style/AppTheme.NoActionBar.Fit"/>
 
         <meta-data
             android:name="QBSDKAppKey"
